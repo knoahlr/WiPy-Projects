@@ -22,6 +22,7 @@
 from machine import Pin
 import time
 
+
 # Pin configuration.
 # WARNING: Do not use PA4-X5 or PA5-X6 as the echo pin without a 1k resistor.
 
@@ -64,12 +65,11 @@ class Ultrasonic:
         while self.echo.value() == 1:
             end = time.ticks_us()
 
-        # # Deinit the microseconds counter
-        # micros.deinit()
 
         # Calc the duration of the recieved pulse, divide the result by
         # 2 (round-trip) and divide it by 29 (the speed of sound is
         # 340 m/s and that is 29 us/cm).
         dist_in_cm = ((time.ticks_diff(start, end) / 2) / 29)
+
 
         return dist_in_cm
