@@ -10,13 +10,13 @@ import time, re, socket
 from network import WLAN
 
 def getTime():
+
     UTC_5=5*3600
     attempts=0
-
     while True and attempts < 5:
         try:
             timesock=socket.socket()
-        except OSError:
+        except OSError:#need to take care of EHOSTUNREACH excpetion as well
             if timesock:
                 timesock.close()
                 del timesock

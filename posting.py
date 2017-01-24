@@ -9,7 +9,7 @@ except:
 import binascii
 import re
 
-"""Open an arbitrary URL.
+"""Open an arbitrary URL
 Adapted for Micropython by Alex Cowan <acowan@gmail.com>
 Works in a similar way to python-requests http://docs.python-requests.org/en/latest/
 """
