@@ -1,5 +1,9 @@
 ##
+<<<<<<< HEAD
 # Port of Ultrasonic library for MicroPythons pyboard by Sergio Conde Gómez.
+=======
+# Port of Ultrasonic library for MicroPython's pyboard by Sergio Conde Gómez.
+>>>>>>> 18ec24c2dca7c3862e720f795a1696fff99da771
 # Desgined for WiPy module
 # Compatible with HC-SR04 and SRF04.
 #
