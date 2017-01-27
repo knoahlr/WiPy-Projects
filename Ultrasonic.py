@@ -1,9 +1,6 @@
 ##
-<<<<<<< HEAD
 # Port of Ultrasonic library for MicroPythons pyboard by Sergio Conde Gómez.
-=======
 # Port of Ultrasonic library for MicroPython's pyboard by Sergio Conde Gómez.
->>>>>>> 18ec24c2dca7c3862e720f795a1696fff99da771
 # Desgined for WiPy module
 # Compatible with HC-SR04 and SRF04.
 #
@@ -37,12 +34,12 @@ class Ultrasonic:
 
         # Init trigger pin (out)
         self.trigger = Pin(self.triggerPin)
-        self.trigger.init(Pin.OUT, Pin.PULL_NONE)
+        self.trigger.init(Pin.OUT)
         self.trigger.value(0)
 
         # Init echo pin (in)
         self.echo = Pin(self.echoPin)
-        self.echo.init(Pin.IN,Pin.PULL_NONE)
+        self.echo.init(Pin.IN)
 
     def distance_in_inches(self):
         return (self.distance_in_cm() * 0.3937)
@@ -73,7 +70,7 @@ class Ultrasonic:
         # Calc the duration of the recieved pulse, divide the result by
         # 2 (round-trip) and divide it by 29 (the speed of sound is
         # 340 m/s and that is 29 us/cm).
-        dist_in_cm = ((time.ticks_diff(start, end) / 2) / 29)
+        dist_in_cm = ((time.ticks_diff(start, end) / 2.0) / 29.0)
 
 
         return dist_in_cm
