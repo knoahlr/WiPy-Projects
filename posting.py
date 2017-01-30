@@ -263,11 +263,11 @@ class URLOpener:
 ##                                        Post Function                                          ##
 ###################################################################################################
 
-def post_data(sensor_id, sensor_value, gateway_id):
+def post_data(sensor_id, sensor_value, gateway_id, httpSAS):
+
 	#httpSAS="SharedAccessSignature sr=https%3a%2f%2feappiotsens.servicebus.windows.net%2f4c6b45a4-8b35-4a10-9080-abd9b912f409&sig=u6sP5%2fUEpVMIoUtGxkIFdHQwaMa33M54a0LGGwlP140%3d&se=4634217147&skn=ListenAccessPolicy"
-    httpSAS = "SharedAccessSignature sr=https%3a%2f%2feappiotsens.servicebus.windows.net%2fdatacollectoroutbox%2fpublishers%2f4c6b45a4-8b35-4a10-9080-abd9b912f409%2fmessages&sig=6fijY7s%2bgSdiXaffEffhfUx0BWperwSxI0zGHZzNzy4%3d&se=4634217147&skn=SendAccessPolicy"
     #time_now = int(1484682032447 + time.time()*1000.0)
-    time_now=getTime() * 1000
+    time_now=time.time() * 1000
     print(time_now)
     sensor_data = '[{"id":"%s","v":[{"m":[%s],"t":%d}]}]' % (sensor_id, sensor_value, time_now)
 
@@ -280,26 +280,24 @@ def post_data(sensor_id, sensor_value, gateway_id):
     print(headers,sensor_data)
     return(headers,sensor_data)
 
-def DataPost(Data):
-    gateway_id="4c6b45a4-8b35-4a10-9080-abd9b912f409"
+def DataPost(SensorInfo, httpSAS, gateway_id):
     #url='https://eappiot.sensbysigma.com/#/datacollector/%s' % (gateway_id)
     url='https://eappiotsens.servicebus.windows.net/datacollectoroutbox/publishers/%s/messages' % (gateway_id)
 
-    sensors={"Temperature":"8b2a21e0-0159-447a-9587-cca30a7bd176"}
+    SensorTypes={"Temperature":"da4a54fe-3d80-4542-a592-42aa89c97fd3", "Distance":"43abb163-44e2-40c9-81e0-9ac4cfa8ccc7"}
 
-    sensor_inputs={"Temperature":Data}
-
-    for Key in sensors:
-        sensor_value = sensor_inputs[Key]
-        sensor_name=sensors[Key]
-        sensor_id=sensors[Key]
+    for Sensors in SensorInfo:
+        Sensor_Value = Sensors[1]
+        Sensor_Name=Sensors[0]
+        print(Sensors[0],Sensors[1])
+        Sensor_Id=SensorTypes[Sensor_Name]
         #print(sensor_value)
-        (header_data, sensor_data) = post_data(sensor_id, sensor_value, gateway_id)
-        response = post(url, data=sensor_data, headers=header_data)
+        (Header_Data, Sensor_Data) = post_data(Sensor_Id, Sensor_Value, gateway_id, httpSAS)
+        response = post(url, data=Sensor_Data, headers=Header_Data)
         print(response)
         if str(response.status_code) != "201":
             print("Error: Post Response: "+ str(response.status_code))
             sys.exit(1)
-        print ("Posted %s: %s" % (sensor_name, sensor_data))
+        print ("Posted %s: %s" % (Sensor_Name, Sensor_Data))
         print ("Post Response Status: " + str(response.status_code))
 
