@@ -59,12 +59,12 @@ class Ultrasonic:
 
         # Wait 'till whe pulse starts.
         while self.echo.value() == 0:
-            start = time.ticks_ms()
-            print(time.ticks_ms())
+            start = time.ticks_us()
+            print(time.ticks_us())
 
         # Wait 'till the pulse is gone.
         while self.echo.value() == 1:
-            end = time.ticks_ms()
+            end = time.ticks_us()
 
 
         # Calc the duration of the recieved pulse, divide the result by
@@ -73,9 +73,3 @@ class Ultrasonic:
         dist_in_cm = ((time.ticks_diff(start, end) / 2.0) / 29.0)
 
         return dist_in_cm
-
-
-
-        if __name__ == '__main__':
-            a_game = Comm_system()
-            a_game.run()
