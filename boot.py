@@ -27,13 +27,14 @@ def getTime():
                     pycom.heartbeat(False)
                     pycom.rgbled(0xffffff)
                     machine.reset()
-                    
+
     CurrentTime=timesock.recv(1024)
     print(CurrentTime)
     #Date=re.search("\d{2}-\d{2}-\d{2}",CurrentTime).group(0)
     Date=re.search("[0-9]+-[0-9]+-[0-9]+",CurrentTime).group(0)
     Time=re.search("[0-9]+:[0-9]+:([0-9]+.[0-9]+)", CurrentTime).group(0)
-    InitRTC(Date, Time)
+    if machine.reset_cause() != machine.SOFT_RESET:
+        InitRTC(Date, Time)
     tm_year=int(Date.split("-")[0]) + 100 #should be number of years since 1900
     tm_yday=int(Date.split("-")[2]) - 1 #number of day since Jan 1 of that year
     tm_hour=int(Time.split(":")[0])

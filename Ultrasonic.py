@@ -70,10 +70,10 @@ class Ultrasonic:
         # Calc the duration of the recieved pulse, divide the result by
         # 2 (round-trip) and divide it by 29 (the speed of sound is
         # 340 m/s and that is 29 us/cm).
-        dist_in_cm = ((end-start / 2.0 ) / 29.0)
-
+        dist_in_cm = ((time.ticks_diff(start, end) / 2.0) / 29.0)
 
         return dist_in_cm
+
 
 
         if __name__ == '__main__':
