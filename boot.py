@@ -23,10 +23,6 @@ for line in wlan.scan():
         time.sleep(3)
         break
 
-#initializing Ultrasonic Sensors
-print("Initializing Ultrasound")
-Ultra=Ultrasonic.Ultrasonic("P12","P14")
-
 #GatewayIDs
 gateway_id="4c6b45a4-8b35-4a10-9080-abd9b912f409"
 WiPygateway_id="435997a2-7590-45bb-ab1b-c110c743118e"

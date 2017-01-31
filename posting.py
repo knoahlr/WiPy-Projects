@@ -8,6 +8,7 @@ except:
     import ssl
 import binascii
 import re
+import gc
 
 """Open an arbitrary URL
 Adapted for Micropython by Alex Cowan <acowan@gmail.com>

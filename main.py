@@ -37,11 +37,21 @@ def getTime():
     print(CurrentTime)
     InitRTC(CurrentTime)
 
+#initializing Ultrasonic Sensors
+print("Initializing Ultrasound")
+Ultra=Ultrasonic.Ultrasound("P12","P14")
+
+Start=time.ticks_ms()
 while True:
     if wlan.isconnected():
         getTime()
         pycom.heartbeat(True)
         break
-    time.sleep(1)
+    End=time.ticks_ms()
+    if time.ticks_diff(Start,End) > 5000:
+        pycom.rgbled(0xff0000)
+        print("No WiFI connection, time has not been set")
+        break
+
 
     
