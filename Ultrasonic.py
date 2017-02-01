@@ -53,11 +53,6 @@ class Ultrasound:
         # 340 m/s and that is 29 us/cm).
         self.End_Tick=time.ticks_us()
         self.Dist_In_Cm.append(((time.ticks_diff (self.Start_Tick,self.End_Tick ) / 2.0) / 29.0))
-    
-
-
-        
-
 
     def distance_in_cm(self):
         self.Start_Tick = 0

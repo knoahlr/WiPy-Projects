@@ -53,5 +53,12 @@ while True:
         print("No WiFI connection, time has not been set")
         break
 
+print("Sending Data")
+pycom.heartbeat(False)
+while True:
+    pycom.rgbled(0x0000ff)
+    posting.DataPost((("Distance",Ultra.distance_in_cm()[0]),),WIPYhttpSAS, WiPygateway_id)
 
+
+pycom.heartbeat(True)
     
