@@ -5,6 +5,9 @@ import time
 import pycom
 import re
 import posting
+from machine import RTC
+import Ultrasonic
+import gc
 
 def InitRTC(CurrentTime):
     pycom.rgbled(0x0000ff)
@@ -20,20 +23,19 @@ def getTime():
     time.sleep(4)
 
     attempts=0
-    while True and attempts < 5:
-        timesock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        try:
-            timesock.connect(socket.getaddrinfo('time.nist.gov',13)[0][-1])
-            break
-        except Exception as e:
-            print(e)
+    timesock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    timesock.connect(socket.getaddrinfo('time.nist.gov',13)[0][-1])
+
+    try:
+        CurrentTime=timesock.recv(1024)
+    except Exception as e:
+        if re.search("(EHOSTUNREACH|ECONNRESET)",e):
+            getTime()
             timesock.close()
             del timesock
             time.sleep_ms(100)
-            attempts += 1
-            if attempts == 3:
-                machine.reset()
-    CurrentTime=timesock.recv(1024)
+        else:
+            pass
     print(CurrentTime)
     InitRTC(CurrentTime)
 
@@ -58,7 +60,7 @@ pycom.heartbeat(False)
 while True:
     pycom.rgbled(0x0000ff)
     posting.DataPost((("Distance",Ultra.distance_in_cm()[0]),),WIPYhttpSAS, WiPygateway_id)
-
-
+    gc.collect()
+    time.sleep_ms(100)
 pycom.heartbeat(True)
     

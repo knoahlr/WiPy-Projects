@@ -1,11 +1,11 @@
 import machine
 from network import WLAN
-from machine import UART, Pin, RTC
+from machine import UART, Pin
 import os
-import pycom
+
 import re
 import time
-import Ultrasonic
+
 
 import time, re, socket
 from network import WLAN
@@ -39,4 +39,4 @@ print(machine.reset_cause())
     
 
 
-#posting.DataPost((("Distance",Ultra.distance_in_cm()),),WIPYhttpSAS, WiPygateway_id)
+#posting.DataPost((("Distance",Ultra.distance_in_cm()[0]),),WIPYhttpSAS, WiPygateway_id)
