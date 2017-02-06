@@ -51,16 +51,24 @@ while True:
         break
     End=time.ticks_ms()
     if time.ticks_diff(Start,End) > 5000:
+        pycom.heartbeat(False)
         pycom.rgbled(0xff0000)
         print("No WiFI connection, time has not been set")
         break
 
 print("Sending Data")
 pycom.heartbeat(False)
+errorFile=open("Error.log","w")
 while True:
-    pycom.rgbled(0x0000ff)
-    posting.DataPost((("Distance",Ultra.distance_in_cm()[0]),),WIPYhttpSAS, WiPygateway_id)
+    pycom.heartbeat(True)
+    try:
+        posting.DataPost((("Distance",Ultra.distance_in_cm()[0]),),WIPYhttpSAS, WiPygateway_id)
+    except Exception as e:
+        errorFile.write("The exception is {0}".format(str(e)))
     gc.collect()
-    time.sleep_ms(100)
-pycom.heartbeat(True)
+    time.sleep_ms(10)
+errorFile.close()   
+pycom.heartbeat(False)
+pycom.rgbled(0x0000ff)
+
     

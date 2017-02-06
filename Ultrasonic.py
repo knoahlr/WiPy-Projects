@@ -68,7 +68,7 @@ class Ultrasound:
 
         self.echo.callback(Pin.IRQ_HIGH_LEVEL, Ultrasound.Calc_Dist,arg=self)
         
-        time.sleep(1)
+        time.sleep_ms(50)
 
         print("\n")
         print(gc.mem_free())
