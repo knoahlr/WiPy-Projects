@@ -70,6 +70,17 @@ errorFile=open("Error.log","w")
 #Continously send data when on. (If time was obtained)
 while True:
     pycom.heartbeat(True)
+while True:
+    pycom.heartbeat(True)
+    try:
+        posting.DataPost((("Distance",Ultra.distance_in_cm()[0]),),WIPYhttpSAS, WiPygateway_id)
+    except Exception as e:
+        errorFile.write("The exception is {0}".format(str(e)))
+    gc.collect()
+    time.sleep_ms(10)
+errorFile.close()   
+pycom.heartbeat(False)
+pycom.rgbled(0x0000ff)
     
     try:
         posting.DataPost((("Distance", Ultra.distance_in_cm()[0]), ), WIPYhttpSAS, WiPygateway_id)
