@@ -24,7 +24,7 @@ class Infrared:
         self.humanfound()
         machine.idle()
 
-    def humanFound():
+    def humanFound(self):
 
         pycom.heartbeat(False)
         pycom.rgbled(0xff0000)
